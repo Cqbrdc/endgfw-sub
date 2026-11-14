@@ -38,22 +38,25 @@ Dashboard → Workers & Pages → Create → Worker → Edit Code → 粘贴 `wo
 
 ## 订阅地址
 
+> 所有地址必须带访问密钥 `?key=1234`（密钥在 `worker.js` 顶部 `CONFIG.accessKey`，部署后请改掉；
+> 也可在 Cloudflare 后台 Settings → Variables 里设置 `ACCESS_KEY` 覆盖，优先级更高）。
+
 | 路径 | 用途 |
 | --- | --- |
-| `/` 或 `/sub` | 混合订阅（base64）→ Hiddify / v2rayN / v2rayNG / Shadowrocket |
-| `/outline` | Outline 页面：ss:// 逐条复制 + 二维码（Outline 只认 SS 且不支持订阅链接） |
-| `/ss` | 仅 Shadowsocks 的订阅 |
-| `/plain` | 明文节点列表，排查用 |
-| `/stats` | 节点数、镜像命中情况、更新时间 |
-| `/refresh` | 手动刷新（可选设置 `REFRESH_TOKEN` 变量后需 `?token=`） |
+| `/?key=1234` 或 `/sub?key=1234` | 混合订阅（base64）→ Hiddify / v2rayN / v2rayNG / Shadowrocket |
+| `/outline?key=1234` | Outline 页面：ss:// 逐条复制 + 二维码（Outline 只认 SS 且不支持订阅链接） |
+| `/ss?key=1234` | 仅 Shadowsocks 的订阅 |
+| `/plain?key=1234` | 明文节点列表，排查用 |
+| `/stats?key=1234` | 节点数、镜像命中情况、更新时间 |
+| `/refresh?key=1234` | 手动刷新（可选设置 `REFRESH_TOKEN` 变量后需 `?token=`） |
 
 ## 客户端用法速查
 
 | 客户端 | 添加什么 |
 | --- | --- |
-| Hiddify | 添加订阅 URL：`…workers.dev/sub` |
-| v2rayN | 订阅分组设置粘贴 `…workers.dev/sub` → 更新全部订阅 |
-| Outline | 打开 `…workers.dev/outline`，逐条复制 ss:// 或扫码 |
+| Hiddify | 添加订阅 URL：`…workers.dev/sub?key=1234` |
+| v2rayN | 订阅分组设置粘贴 `…workers.dev/sub?key=1234` → 更新全部订阅 |
+| Outline | 打开 `…workers.dev/outline?key=1234`，逐条复制 ss:// 或扫码 |
 
 详细步骤、排障表见 [部署与使用说明.md](./部署与使用说明.md)。
 

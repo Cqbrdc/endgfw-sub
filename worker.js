@@ -16,8 +16,11 @@
  * 定时：每 2 小时执行一次，cron 表达式见 wrangler.toml（UTC）
  *       Dashboard 部署时，在 Settings → Triggers → Cron Triggers 里添加同样的表达式
  *
- * 存储：不用 KV。聚合结果放进 Cache API（每个数据中心独立，TTL 6 小时），
+ * 存储：不用 KV。聚合结果放进 Cache API（每个数据中心独立，TTL 2 小时），
  *       定时任务刷新一次，客户端访问时直接命中缓存。
+ *
+ * 访问控制：CONFIG.accessKey 默认 "1234"，所有地址都要带 ?key=1234 才能访问；
+ *           建议部署后改掉，或在 Cloudflare 后台用 ACCESS_KEY 变量覆盖。
  * ------------------------------------------------------------------
  */
 
@@ -30,6 +33,10 @@ const CONFIG = {
   officialSub: "https://raw.githubusercontent.com/hello-world-1989/cn-news/main/end-gfw-free",
   maxNodes: 300,
   cacheTtl: 7200, // 与 cron 频率一致：2 小时
+  // 访问密钥：部署后所有地址必须带 ?key=这个值 才能访问（包括订阅和页面），
+  // 留空 "" 则不启用。部署后也可在 Cloudflare 后台 Settings → Variables 里
+  // 设置 ACCESS_KEY 变量覆盖这里（优先级更高），改起来不用动代码。
+  accessKey: "1234",
 };
 
 const UA =
@@ -44,6 +51,17 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const path = url.pathname.replace(/\/+$/, "") || "/";
+
+    // 访问控制：key 不对一律 404，避免被扫描探测
+    const expectedKey = (env.ACCESS_KEY || CONFIG.accessKey || "").trim();
+    if (expectedKey) {
+      const provided =
+        url.searchParams.get("key") ||
+        url.searchParams.get("token") ||
+        request.headers.get("x-access-key") ||
+        "";
+      if (provided !== expectedKey) return new Response("not found", { status: 404 });
+    }
 
     if (path === "/refresh") {
       if (env.REFRESH_TOKEN && url.searchParams.get("token") !== env.REFRESH_TOKEN) {
