@@ -1,0 +1,13 @@
+{
+  "name": "endgfw-sub",
+  "version": "1.0.0",
+  "private": true,
+  "description": "定时聚合 end-gfw 免费单节点，输出 Hiddify / v2rayN / Outline 可用的订阅（Cloudflare Worker，零 KV 零配置）",
+  "scripts": {
+    "dev": "wrangler dev",
+    "deploy": "wrangler deploy"
+  },
+  "devDependencies": {
+    "wrangler": "^4.0.0"
+  }
+}

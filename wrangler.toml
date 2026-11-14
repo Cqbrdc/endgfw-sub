@@ -1,0 +1,12 @@
+name = "endgfw-sub"
+main = "worker.js"
+compatibility_date = "2025-11-01"
+
+# 不需要 KV、不需要 D1，部署即用。
+# Workers 的 cron 走 UTC："0 */2 * * *" = 每 2 小时一次（UTC 0/2/4/...，含北京时间 10:00）
+[triggers]
+crons = ["0 */2 * * *"]
+
+[vars]
+# 可选：设置后 /refresh 必须带 ?token=xxx 才能手动刷新
+REFRESH_TOKEN = ""
