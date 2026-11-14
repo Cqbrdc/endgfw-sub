@@ -1,6 +1,6 @@
 # endgfw-sub
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/<你的用户名>/endgfw-sub)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/Cqbrdc/endgfw-sub)
 
 定时抓取 **end-gfw 镜像站的免费单节点**，自动跟随镜像地址变化，去重后输出标准订阅。
 运行在 Cloudflare Workers 上：**不需要 KV、不需要数据库、不需要任何环境变量**，部署即用。
